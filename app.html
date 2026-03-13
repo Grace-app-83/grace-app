@@ -307,7 +307,13 @@
           <div class="header-logo-sub">Faith Companion</div>
         </div>
       </div>
-      <div class="header-right" onclick="switchTab('profile')">👤</div>
+      <div style="display:flex;gap:8px;align-items:center;">
+  <div class="header-right" onclick="toggleNotifications()" id="notif-bell" style="position:relative;">
+    🔔
+    <div id="notif-badge" style="position:absolute;top:-4px;right:-4px;width:16px;height:16px;background:#C9A84C;border-radius:50%;font-size:10px;color:#0d0a07;display:flex;align-items:center;justify-content:center;font-weight:800;">3</div>
+  </div>
+  <div class="header-right" onclick="switchTab('profile')">👤</div>
+</div>
     </header>
     <nav>
       <button class="active" onclick="switchTab('chat', event)"><span class="tab-icon">💬</span>Chat</button>
@@ -469,6 +475,14 @@
           <button class="btn-danger" onclick="logOut()">Sign Out</button>
         </div>
       </div>
+      <!-- Notifications Panel -->
+<div id="notif-panel" style="display:none;position:fixed;top:70px;right:10px;width:300px;background:#1a1510;border:1px solid rgba(201,168,76,0.3);border-radius:16px;z-index:1000;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.5);">
+  <div style="padding:14px 16px;border-bottom:1px solid rgba(201,168,76,0.1);display:flex;justify-content:space-between;align-items:center;">
+    <span style="font-family:'Cormorant Garamond',serif;font-size:18px;color:#E8C97A;">Notifications</span>
+    <span onclick="clearNotifications()" style="font-size:11px;color:#C9A84C;cursor:pointer;letter-spacing:1px;">CLEAR ALL</span>
+  </div>
+  <div id="notif-list"></div>
+</div>
     </section>
 
   </div>
@@ -787,6 +801,7 @@
 </body>
 
 </html>
+
 
 
 
