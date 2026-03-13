@@ -784,6 +784,78 @@
     document.getElementById('profile-phone-input').value = localStorage.getItem('grace_phone') || '';
     document.getElementById('settings-name').textContent = name;
   }
+  // ===== NOTIFICATIONS =====
+let notifications = [
+  { id: 1, icon: '📖', title: 'Daily Devotional', message: 'Your morning devotional is ready!', time: 'Just now', read: false },
+  { id: 2, icon: '🔥', title: 'Streak Alert', message: 'Don\'t break your streak! Open Grace today!', time: '1h ago', read: false },
+  { id: 3, icon: '🙏', title: 'Prayer Time', message: 'Take a moment to pray today', time: '2h ago', read: false }
+];
+
+function toggleNotifications() {
+  const panel = document.getElementById('notif-panel');
+  if (panel.style.display === 'none') {
+    panel.style.display = 'block';
+    renderNotifications();
+  } else {
+    panel.style.display = 'none';
+  }
+}
+
+function renderNotifications() {
+  const list = document.getElementById('notif-list');
+  if (notifications.length === 0) {
+    list.innerHTML = '<div style="padding:20px;text-align:center;color:#a89880;font-size:13px;">No notifications 🙏</div>';
+    return;
+  }
+  list.innerHTML = notifications.map(function(n) {
+    return '<div style="padding:14px 16px;border-bottom:1px solid rgba(201,168,76,0.08);display:flex;gap:12px;align-items:flex-start;background:' + (n.read ? 'transparent' : 'rgba(201,168,76,0.05)') + '">' +
+      '<div style="font-size:24px;">' + n.icon + '</div>' +
+      '<div style="flex:1;">' +
+        '<div style="font-size:13px;font-weight:700;color:#f0e8d8;">' + n.title + '</div>' +
+        '<div style="font-size:12px;color:#a89880;margin-top:2px;">' + n.message + '</div>' +
+        '<div style="font-size:10px;color:#C9A84C;margin-top:4px;letter-spacing:1px;">' + n.time + '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+  updateBadge();
+}
+
+function updateBadge() {
+  const unread = notifications.filter(function(n) { return !n.read; }).length;
+  const badge = document.getElementById('notif-badge');
+  if (unread > 0) {
+    badge.style.display = 'flex';
+    badge.textContent = unread;
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+function clearNotifications() {
+  notifications = [];
+  renderNotifications();
+  document.getElementById('notif-panel').style.display = 'none';
+}
+
+function addNotification(icon, title, message) {
+  notifications.unshift({
+    id: Date.now(),
+    icon: icon,
+    title: title,
+    message: message,
+    time: 'Just now',
+    read: false
+  });
+  updateBadge();
+}
+
+document.addEventListener('click', function(e) {
+  const panel = document.getElementById('notif-panel');
+  const bell = document.getElementById('notif-bell');
+  if (panel && bell && !panel.contains(e.target) && !bell.contains(e.target)) {
+    panel.style.display = 'none';
+  }
+});
 
   // ===== INIT =====
     // Register service worker
@@ -801,6 +873,7 @@
 </body>
 
 </html>
+
 
 
 
