@@ -165,6 +165,7 @@
     body[data-theme="ocean"] { background-color: #0a0f1f; color: #e0e8f5; }
     body[data-theme="ocean"] header, body[data-theme="ocean"] nav { background-color: #0f1a2a; }
   </style>
+  
   <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#C9A84C">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -771,6 +772,12 @@
   }
 
   // ===== INIT =====
+    // Register service worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/grace-app/service-worker.js')
+      .then(function() { console.log('Service Worker registered!'); })
+      .catch(function(err) { console.log('Service Worker error:', err); });
+  }
   loadTheme();
   updateStreak();
   loadNotifSettings();
@@ -780,5 +787,6 @@
 </body>
 
 </html>
+
 
 
