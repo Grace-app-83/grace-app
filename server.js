@@ -3,7 +3,6 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer');
 const User = require('./models/User');
 
 mongoose.connect(process.env.MONGODB_URI).then(()=>console.log('Connected to MongoDB!')).catch(err=>console.log(err));
@@ -12,10 +11,24 @@ const app = express();
 app.use(cors({origin:'*'}));
 app.use(express.json());
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS }
-});
+async function sendEmail(to, subject, html) {
+  const response = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + process.env.RESEND_API_KEY,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      from: 'Grace App <onboarding@resend.dev>',
+      to: [to],
+      subject: subject,
+      html: html
+    })
+  });
+  const data = await response.json();
+  if (!response.ok) throw new Error(JSON.stringify(data));
+  return data;
+}
 
 app.post('/register',async(req,res)=>{
 try{
@@ -53,12 +66,11 @@ const resetCode=Math.floor(100000+Math.random()*900000).toString();
 user.resetCode=resetCode;
 user.resetCodeExpiry=new Date(Date.now()+15*60*1000);
 await user.save();
-await transporter.sendMail({
-from:'"Grace App" <'+process.env.EMAIL_USER+'>',
-to:email,
-subject:'Your Grace Password Reset Code',
-html:'<div style="font-family:sans-serif;max-width:400px;margin:0 auto;padding:30px;background:#0d0a07;color:#f0e8d8;border-radius:16px;"><h1 style="color:#C9A84C;font-size:32px;text-align:center;">GRACE</h1><p style="text-align:center;color:#a89880;">Your password reset code is:</p><div style="background:#1a1510;border:1px solid #C9A84C;border-radius:12px;padding:20px;text-align:center;margin:20px 0;"><span style="font-size:36px;font-weight:800;color:#E8C97A;letter-spacing:8px;">'+resetCode+'</span></div><p style="color:#a89880;font-size:13px;text-align:center;">This code expires in 15 minutes. If you did not request this, ignore this email.</p></div>'
-});
+await sendEmail(
+  email,
+  'Your Grace Password Reset Code',
+  '<div style="font-family:sans-serif;max-width:400px;margin:0 auto;padding:30px;background:#0d0a07;color:#f0e8d8;border-radius:16px;"><h1 style="color:#C9A84C;font-size:32px;text-align:center;">GRACE</h1><p style="text-align:center;color:#a89880;">Your password reset code is:</p><div style="background:#1a1510;border:1px solid #C9A84C;border-radius:12px;padding:20px;text-align:center;margin:20px 0;"><span style="font-size:36px;font-weight:800;color:#E8C97A;letter-spacing:8px;">'+resetCode+'</span></div><p style="color:#a89880;font-size:13px;text-align:center;">This code expires in 15 minutes. If you did not request this, ignore this email.</p></div>'
+);
 res.json({message:'Reset code sent to your email!'});
 }catch(e){console.log(e);res.status(500).json({error:'Could not send email. Try again!'});}
 });
