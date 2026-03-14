@@ -19,6 +19,5 @@
     "mangodb": "^1.0.0",
     "mongodb": "^7.1.0",
     "mongoose": "^9.2.4",
-    "nodemailer": "^6.9.9"
   }
 }
