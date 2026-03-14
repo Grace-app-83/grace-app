@@ -297,7 +297,7 @@
       <div class="input-group">
         <input class="input-field" id="forgot-email" type="email" placeholder="Your email address" />
       </div>
-     async function sendResetCode() {
+  async function sendResetCode() {
   const email = document.getElementById('forgot-email').value.trim();
   if (!email) { alert('Please enter your email!'); return; }
   
@@ -310,7 +310,7 @@
     const data = await response.json();
     if (!response.ok) { alert(data.error); return; }
     
-    await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
+    await emailjs.send('service_2oq09v8', 'template_hozo3sm', {
       to_email: email,
       reset_code: data.code
     });
