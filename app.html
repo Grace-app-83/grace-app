@@ -605,9 +605,10 @@
       const response = await fetch(BACKEND + '/forgot-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) });
       const data = await response.json();
       if (!response.ok) { alert(data.error); return; }
-     await emailjs.send('service_2oq09v8', 'template_hozo3sm', {
+    await emailjs.send('service_2oq09v8', 'template_hozo3sm', {
   email: email,
   reset_code: data.code
+});
 });
       });
       resetEmail = email;
