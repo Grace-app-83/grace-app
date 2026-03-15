@@ -161,13 +161,10 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Grace">
   <link rel="apple-touch-icon" href="icon-192.png">
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script>emailjs.init('9LNJwsRgZWTJ_Ment');</script>
 </head>
 <body>
 <div id="app">
 
-  <!-- SCREEN 1: Splash -->
   <div class="screen active" id="screen-splash">
     <div class="splash-glow"></div>
     <div class="splash-icon">✝</div>
@@ -178,7 +175,6 @@
     <button class="btn-primary" onclick="goToScreen('screen-login')">Get Started</button>
   </div>
 
-  <!-- SCREEN 2: Login -->
   <div class="screen" id="screen-login">
     <div class="screen-inner">
       <div class="login-top">
@@ -205,7 +201,6 @@
     </div>
   </div>
 
-  <!-- SCREEN 3: Register -->
   <div class="screen" id="screen-register">
     <div class="screen-inner">
       <button class="back-btn" onclick="goToScreen('screen-login')">← Back</button>
@@ -227,7 +222,6 @@
     </div>
   </div>
 
-  <!-- SCREEN 4: Profile Setup -->
   <div class="screen" id="screen-profile-setup">
     <div class="screen-inner">
       <button class="back-btn" onclick="goToScreen('screen-register')">← Back</button>
@@ -253,7 +247,6 @@
     </div>
   </div>
 
-  <!-- SCREEN 5: PIN -->
   <div class="screen" id="screen-pin">
     <div class="screen-inner">
       <button class="back-btn" onclick="goToScreen('screen-profile-setup')">← Back</button>
@@ -285,7 +278,6 @@
     </div>
   </div>
 
-  <!-- SCREEN 7: Forgot Password -->
   <div class="screen" id="screen-forgot">
     <div class="screen-inner">
       <button class="back-btn" onclick="goToScreen('screen-login')">← Back</button>
@@ -301,7 +293,6 @@
     </div>
   </div>
 
-  <!-- SCREEN 8: Reset Code -->
   <div class="screen" id="screen-reset-code">
     <div class="screen-inner">
       <button class="back-btn" onclick="goToScreen('screen-forgot')">← Back</button>
@@ -322,7 +313,6 @@
     </div>
   </div>
 
-  <!-- SCREEN 9: New Password -->
   <div class="screen" id="screen-new-password">
     <div class="screen-inner">
       <div class="login-top">
@@ -338,7 +328,6 @@
     </div>
   </div>
 
-  <!-- SCREEN 6: Main App -->
   <div class="screen" id="screen-main">
     <header>
       <div class="header-left">
@@ -373,20 +362,14 @@
     </section>
     <section id="devotional">
       <div class="section-inner">
-        <div class="section-header">
-          <div class="section-title">📖 Daily Devotional</div>
-          <div class="section-sub">Feed your spirit every day</div>
-        </div>
+        <div class="section-header"><div class="section-title">📖 Daily Devotional</div><div class="section-sub">Feed your spirit every day</div></div>
         <div id="devo-content" class="devo-placeholder">Tap below to receive today's devotional ✝</div>
         <button class="btn-section" onclick="generateDevotional()">✦ Generate Today's Devotional</button>
       </div>
     </section>
     <section id="prayer">
       <div class="section-inner">
-        <div class="section-header">
-          <div class="section-title">🙏 Prayer Guide</div>
-          <div class="section-sub">Let us craft a prayer for you</div>
-        </div>
+        <div class="section-header"><div class="section-title">🙏 Prayer Guide</div><div class="section-sub">Let us craft a prayer for you</div></div>
         <div class="prayer-input-card">
           <label class="input-label">What would you like to pray about?</label>
           <textarea class="input-field" id="prayer-intention" placeholder="e.g. healing for my mother…" rows="3"></textarea>
@@ -405,10 +388,7 @@
     </section>
     <section id="scripture">
       <div class="section-inner">
-        <div class="section-header">
-          <div class="section-title">✨ Scripture Study</div>
-          <div class="section-sub">Search and understand God's word</div>
-        </div>
+        <div class="section-header"><div class="section-title">✨ Scripture Study</div><div class="section-sub">Search and understand God's word</div></div>
         <div class="scripture-search-row">
           <input class="input-field" id="scripture-input" placeholder="Topic, question or verse…" />
           <button class="scripture-search-btn" onclick="searchScripture()">Search</button>
@@ -432,16 +412,10 @@
     </section>
     <section id="settings">
       <div class="section-inner">
-        <div class="section-header">
-          <div class="section-title">⚙️ Settings</div>
-          <div class="section-sub">Customize your Grace experience</div>
-        </div>
+        <div class="section-header"><div class="section-title">⚙️ Settings</div><div class="section-sub">Customize your Grace experience</div></div>
         <div class="settings-card">
           <div class="settings-avatar">🙏</div>
-          <div>
-            <div class="settings-name" id="settings-name">Friend</div>
-            <div class="settings-email">Tap to edit profile</div>
-          </div>
+          <div><div class="settings-name" id="settings-name">Friend</div><div class="settings-email">Tap to edit profile</div></div>
         </div>
         <div class="settings-section-title">🎨 App Theme</div>
         <div class="theme-grid">
@@ -459,27 +433,15 @@
         </div>
         <div class="settings-section-title">🔔 Notifications</div>
         <div class="notif-card">
-          <div class="notif-row">
-            <div><div class="notif-title">Daily Devotional</div><div class="notif-sub">Remind me every morning</div></div>
-            <label class="toggle"><input type="checkbox" id="notif-devotional" onchange="saveNotifSettings()" /><span class="toggle-slider"></span></label>
-          </div>
-          <div class="notif-row">
-            <div><div class="notif-title">Prayer Reminder</div><div class="notif-sub">Remind me to pray daily</div></div>
-            <label class="toggle"><input type="checkbox" id="notif-prayer" onchange="saveNotifSettings()" /><span class="toggle-slider"></span></label>
-          </div>
-          <div class="notif-row">
-            <div><div class="notif-title">Streak Alert</div><div class="notif-sub">Don't break your streak!</div></div>
-            <label class="toggle"><input type="checkbox" id="notif-streak" onchange="saveNotifSettings()" /><span class="toggle-slider"></span></label>
-          </div>
+          <div class="notif-row"><div><div class="notif-title">Daily Devotional</div><div class="notif-sub">Remind me every morning</div></div><label class="toggle"><input type="checkbox" id="notif-devotional" onchange="saveNotifSettings()" /><span class="toggle-slider"></span></label></div>
+          <div class="notif-row"><div><div class="notif-title">Prayer Reminder</div><div class="notif-sub">Remind me to pray daily</div></div><label class="toggle"><input type="checkbox" id="notif-prayer" onchange="saveNotifSettings()" /><span class="toggle-slider"></span></label></div>
+          <div class="notif-row"><div><div class="notif-title">Streak Alert</div><div class="notif-sub">Don't break your streak!</div></div><label class="toggle"><input type="checkbox" id="notif-streak" onchange="saveNotifSettings()" /><span class="toggle-slider"></span></label></div>
         </div>
       </div>
     </section>
     <section id="profile">
       <div class="section-inner">
-        <div class="section-header">
-          <div class="section-title">👤 My Profile</div>
-          <div class="section-sub">Manage your account</div>
-        </div>
+        <div class="section-header"><div class="section-title">👤 My Profile</div><div class="section-sub">Manage your account</div></div>
         <div class="profile-top">
           <div class="profile-avatar-big">🙏</div>
           <div class="profile-name-display" id="profile-name-display">Friend</div>
@@ -602,14 +564,16 @@
     const email = document.getElementById('forgot-email').value.trim();
     if (!email) { alert('Please enter your email!'); return; }
     try {
-      const response = await fetch(BACKEND + '/forgot-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) });
+      const response = await fetch(BACKEND + '/forgot-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
       const data = await response.json();
       if (!response.ok) { alert(data.error); return; }
-    await emailjs.send('service_2oq09v8', 'template_hozo3sm', {
-  email: email,
-  reset_code: data.code
-});
-});
+      await emailjs.send('service_2oq09v8', 'template_hozo3sm', {
+        email: email,
+        reset_code: data.code
       });
       resetEmail = email;
       document.getElementById('reset-code-sub').textContent = 'Code sent to ' + email;
@@ -625,13 +589,12 @@
     if (current.value.length >= 1 && nextId) { document.getElementById(nextId).focus(); }
   }
 
-  function javascriptfunction verifyResetCode() {
-  const code = ['otp-1','otp-2','otp-3','otp-4','otp-5','otp-6'].map(function(id) { return document.getElementById(id).value; }).join('');
-  if (code.length < 6) { alert('Please enter the full 6-digit code!'); return; }
-  if (!/^\d{6}$/.test(code)) { alert('Please enter numbers only!'); return; }
-  localStorage.setItem('grace_reset_code', code);
-  goToScreen('screen-new-password');
-}
+  function verifyResetCode() {
+    const code = ['otp-1','otp-2','otp-3','otp-4','otp-5','otp-6'].map(function(id) { return document.getElementById(id).value; }).join('');
+    if (code.length < 6) { alert('Please enter the full 6-digit code!'); return; }
+    localStorage.setItem('grace_reset_code', code);
+    goToScreen('screen-new-password');
+  }
 
   async function resetPassword() {
     const newPass = document.getElementById('new-pass-1').value;
@@ -641,7 +604,11 @@
     if (newPass.length < 6) { alert('Password must be at least 6 characters!'); return; }
     const code = localStorage.getItem('grace_reset_code');
     try {
-      const response = await fetch(BACKEND + '/reset-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: resetEmail, code, newPassword: newPass }) });
+      const response = await fetch(BACKEND + '/reset-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: resetEmail, code, newPassword: newPass })
+      });
       const data = await response.json();
       if (!response.ok) { alert(data.error); return; }
       alert('Password reset successfully! Please sign in ✅');
@@ -862,5 +829,9 @@
   loadProfile();
   showWelcomeMessage();
 </script>
+
+<!-- EmailJS loaded at bottom so it's ready before any function calls it -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init('9LNJwsRgZWTJ_Ment');</script>
 </body>
 </html>
