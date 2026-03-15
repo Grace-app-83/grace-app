@@ -162,7 +162,7 @@
   <meta name="apple-mobile-web-app-title" content="Grace">
   <link rel="apple-touch-icon" href="icon-192.png">
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>emailjs.init('YOUR_PUBLIC_KEY');</script>
+  <script>emailjs.init('9LNJwsRgZWTJ_Ment');</script>
 </head>
 <body>
 <div id="app">
@@ -297,33 +297,7 @@
       <div class="input-group">
         <input class="input-field" id="forgot-email" type="email" placeholder="Your email address" />
       </div>
-  async function sendResetCode() {
-  const email = document.getElementById('forgot-email').value.trim();
-  if (!email) { alert('Please enter your email!'); return; }
-  
-  try {
-    const response = await fetch(BACKEND + '/forgot-password', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email })
-    });
-    const data = await response.json();
-    if (!response.ok) { alert(data.error); return; }
-    
-    await emailjs.send('service_2oq09v8', 'template_hozo3sm', {
-      to_email: email,
-      reset_code: data.code
-    });
-    
-    resetEmail = email;
-    document.getElementById('reset-code-sub').textContent = 'Code sent to ' + email;
-    alert('Reset code sent! Check your email ✅');
-    goToScreen('screen-reset-code');
-  } catch(e) { 
-    console.log(e);
-    alert('Could not send email. Try again!'); 
-  }
-}
+      <button class="btn-primary" onclick="sendResetCode()">Send Reset Code</button>
     </div>
   </div>
 
@@ -390,7 +364,6 @@
       <button onclick="switchTab('settings', event)"><span class="tab-icon">⚙️</span>Settings</button>
       <button onclick="switchTab('profile', event)"><span class="tab-icon">👤</span>Profile</button>
     </nav>
-
     <section id="chat" class="active">
       <div id="chat-messages"></div>
       <div id="chat-input-area">
@@ -398,7 +371,6 @@
         <button id="send-btn">➤</button>
       </div>
     </section>
-
     <section id="devotional">
       <div class="section-inner">
         <div class="section-header">
@@ -409,7 +381,6 @@
         <button class="btn-section" onclick="generateDevotional()">✦ Generate Today's Devotional</button>
       </div>
     </section>
-
     <section id="prayer">
       <div class="section-inner">
         <div class="section-header">
@@ -432,7 +403,6 @@
         <div class="prayer-result" id="prayer-result"></div>
       </div>
     </section>
-
     <section id="scripture">
       <div class="section-inner">
         <div class="section-header">
@@ -460,7 +430,6 @@
         </div>
       </div>
     </section>
-
     <section id="settings">
       <div class="section-inner">
         <div class="section-header">
@@ -505,7 +474,6 @@
         </div>
       </div>
     </section>
-
     <section id="profile">
       <div class="section-inner">
         <div class="section-header">
@@ -542,7 +510,6 @@
           <button class="btn-danger" onclick="logOut()">Sign Out</button>
         </div>
       </div>
-      <!-- Notifications Panel -->
       <div id="notif-panel" style="display:none;position:fixed;top:70px;right:10px;width:300px;background:#1a1510;border:1px solid rgba(201,168,76,0.3);border-radius:16px;z-index:1000;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.5);">
         <div style="padding:14px 16px;border-bottom:1px solid rgba(201,168,76,0.1);display:flex;justify-content:space-between;align-items:center;">
           <span style="font-family:'Cormorant Garamond',serif;font-size:18px;color:#E8C97A;">Notifications</span>
@@ -638,17 +605,22 @@
       const response = await fetch(BACKEND + '/forgot-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) });
       const data = await response.json();
       if (!response.ok) { alert(data.error); return; }
+      await emailjs.send('service_2oq09v8', 'template_hozo3sm', {
+        to_email: email,
+        reset_code: data.code
+      });
       resetEmail = email;
       document.getElementById('reset-code-sub').textContent = 'Code sent to ' + email;
       alert('Reset code sent! Check your email ✅');
       goToScreen('screen-reset-code');
-    } catch(e) { alert('Could not send email. Try again!'); }
+    } catch(e) {
+      console.log(e);
+      alert('Could not send email. Try again!');
+    }
   }
 
   function otpNext(current, nextId) {
-    if (current.value.length >= 1 && nextId) {
-      document.getElementById(nextId).focus();
-    }
+    if (current.value.length >= 1 && nextId) { document.getElementById(nextId).focus(); }
   }
 
   function verifyResetCode() {
