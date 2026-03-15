@@ -625,12 +625,13 @@
     if (current.value.length >= 1 && nextId) { document.getElementById(nextId).focus(); }
   }
 
-  function verifyResetCode() {
-    const code = ['otp-1','otp-2','otp-3','otp-4','otp-5','otp-6'].map(function(id) { return document.getElementById(id).value; }).join('');
-    if (code.length < 6) { alert('Please enter the full 6-digit code!'); return; }
-    localStorage.setItem('grace_reset_code', code);
-    goToScreen('screen-new-password');
-  }
+  function javascriptfunction verifyResetCode() {
+  const code = ['otp-1','otp-2','otp-3','otp-4','otp-5','otp-6'].map(function(id) { return document.getElementById(id).value; }).join('');
+  if (code.length < 6) { alert('Please enter the full 6-digit code!'); return; }
+  if (!/^\d{6}$/.test(code)) { alert('Please enter numbers only!'); return; }
+  localStorage.setItem('grace_reset_code', code);
+  goToScreen('screen-new-password');
+}
 
   async function resetPassword() {
     const newPass = document.getElementById('new-pass-1').value;
