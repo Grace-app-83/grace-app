@@ -576,6 +576,7 @@
         reset_code: data.code
       });
       resetEmail = email;
+      localStorage.setItem('grace_reset_email', email);
       document.getElementById('reset-code-sub').textContent = 'Code sent to ' + email;
       alert('Reset code sent! Check your email ✅');
       goToScreen('screen-reset-code');
@@ -596,7 +597,7 @@
       const response = await fetch(BACKEND + '/verify-code', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: resetEmail, code })
+        body: JSON.stringify({ email: resetEmail || localStorage.getItem('grace_reset_email'), code })
       });
       const data = await response.json();
       if (!response.ok) { alert(data.error); return; }
@@ -616,7 +617,7 @@
       const response = await fetch(BACKEND + '/reset-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: resetEmail, code, newPassword: newPass })
+        body: JSON.stringify({ email: resetEmail || localStorage.getItem('grace_reset_email'), code, newPassword: newPass })
       });
       const data = await response.json();
       if (!response.ok) { alert(data.error); return; }
