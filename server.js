@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const dotenv = require('dotenv');
+dotenv.config();
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -49,6 +51,18 @@ user.resetCodeExpiry=new Date(Date.now()+15*60*1000);
 await user.save();
 res.json({message:'Reset code generated!', code: resetCode});
 }catch(e){console.log(e);res.status(500).json({error:'Something went wrong!'});}
+});
+
+app.post('/verify-code',async(req,res)=>{
+try{
+const{email,code}=req.body;
+if(!email||!code)return res.status(400).json({error:'Email and code are required!'});
+const user=await User.findOne({email});
+if(!user)return res.status(400).json({error:'No account found!'});
+if(user.resetCode!==code)return res.status(400).json({error:'Invalid reset code!'});
+if(new Date()>user.resetCodeExpiry)return res.status(400).json({error:'Reset code has expired! Request a new one.'});
+res.json({message:'Code verified!'});
+}catch(e){res.status(500).json({error:'Something went wrong!'});}
 });
 
 app.post('/reset-password',async(req,res)=>{
