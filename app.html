@@ -588,12 +588,21 @@
   function otpNext(current, nextId) {
     if (current.value.length >= 1 && nextId) { document.getElementById(nextId).focus(); }
   }
-
-  function verifyResetCode() {
+  
+  async function verifyResetCode() {
     const code = ['otp-1','otp-2','otp-3','otp-4','otp-5','otp-6'].map(function(id) { return document.getElementById(id).value; }).join('');
     if (code.length < 6) { alert('Please enter the full 6-digit code!'); return; }
-    localStorage.setItem('grace_reset_code', code);
-    goToScreen('screen-new-password');
+    try {
+      const response = await fetch(BACKEND + '/verify-code', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: resetEmail, code })
+      });
+      const data = await response.json();
+      if (!response.ok) { alert(data.error); return; }
+      localStorage.setItem('grace_reset_code', code);
+      goToScreen('screen-new-password');
+    } catch(e) { alert('Could not verify code. Try again!'); }
   }
 
   async function resetPassword() {
