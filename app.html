@@ -2,16 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Grace — Faith Companion</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,700;1,400&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    body { background-color: #0a0806; color: #f0e8d8; font-family: 'Nunito', sans-serif; height: 100dvh; overflow: hidden; display: flex; justify-content: center; }
-    #app { position: relative; width: 100%; max-width: 480px; height: 100dvh; overflow: hidden; background-color: #0d0a07; }
+   body {
+  background-color: #0d0a07;
+  color: #f0e8d8;
+  font-family: 'Nunito', sans-serif;
+  height: 100dvh;
+  overflow: hidden;
+  max-width: 480px;
+  margin: 0 auto;
+}
+    #app { position: relative; width: 100%; height: 100dvh; overflow: hidden; }
     .screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; transform: translateX(100%); transition: transform 0.4s ease; overflow-y: auto; background-color: #0d0a07; }
     .screen.active { transform: translateX(0); }
     .screen.exit { transform: translateX(-100%); }
+
     #screen-splash { background: radial-gradient(ellipse at top, #1a1208 0%, #0d0a07 60%); padding: 40px 30px; gap: 20px; }
     .splash-glow { position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 300px; height: 300px; background: radial-gradient(circle, rgba(201,168,76,0.15) 0%, transparent 70%); pointer-events: none; }
     .splash-icon { font-size: 60px; background: linear-gradient(135deg, #E8C97A, #C9A84C); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 20px rgba(201,168,76,0.4)); }
@@ -19,6 +28,7 @@
     .splash-tagline { font-size: 14px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #C9A84C; }
     .splash-divider { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, #C9A84C, transparent); }
     .splash-desc { font-size: 15px; color: #a89880; text-align: center; line-height: 1.7; max-width: 260px; }
+
     .btn-primary { width: 100%; max-width: 300px; padding: 16px; background: linear-gradient(135deg, #C9A84C, #8a6d2e); border: none; border-radius: 14px; color: #0d0a07; font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 800; letter-spacing: 1px; cursor: pointer; margin-top: 20px; box-shadow: 0 8px 30px rgba(201,168,76,0.3); }
     .screen-inner { width: 100%; max-width: 400px; padding: 50px 30px 40px; display: flex; flex-direction: column; gap: 16px; }
     .login-top { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 10px; }
@@ -38,12 +48,14 @@
     select.input-field { appearance: none; cursor: pointer; }
     .remember-row { display: flex; justify-content: space-between; align-items: center; }
     .remember-label { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #a89880; cursor: pointer; }
-    .forgot-link { font-size: 13px; color: #C9A84C; cursor: pointer; text-decoration: underline; }
+    .forgot-link { font-size: 13px; color: #C9A84C; cursor: pointer; }
     .switch-link { text-align: center; font-size: 13px; color: #a89880; }
     .switch-link span { color: #C9A84C; font-weight: 700; cursor: pointer; }
     .back-btn { background: none; border: none; color: #C9A84C; font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; padding: 0; align-self: flex-start; }
+
     .profile-avatar { position: relative; width: 90px; height: 90px; background: #1a1510; border: 2px solid rgba(201,168,76,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; margin-bottom: 8px; }
     .avatar-edit { position: absolute; bottom: 0; right: 0; width: 26px; height: 26px; background: linear-gradient(135deg, #C9A84C, #8a6d2e); border: none; border-radius: 50%; color: #0d0a07; font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
     .pin-icon { font-size: 50px; margin-bottom: 8px; }
     .pin-dots { display: flex; gap: 20px; justify-content: center; margin: 10px 0; }
     .pin-dot { width: 18px; height: 18px; border-radius: 50%; border: 2px solid rgba(201,168,76,0.4); background: transparent; transition: all 0.2s; }
@@ -53,6 +65,7 @@
     .pin-key:active { background: rgba(201,168,76,0.2); border-color: #C9A84C; transform: scale(0.92); }
     .pin-key.empty { background: transparent; border: none; cursor: default; }
     .pin-key.delete { background: transparent; border: 1px solid rgba(201,168,76,0.15); }
+
     #screen-main { display: flex; flex-direction: column; justify-content: flex-start; padding: 0; overflow: hidden; }
     #screen-main.active { transform: translateX(0); }
     header { padding: 16px 20px; display: flex; flex-direction: row; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(201,168,76,0.15); background: rgba(13,10,7,0.95); backdrop-filter: blur(10px); flex-shrink: 0; }
@@ -61,16 +74,19 @@
     .header-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; color: #E8C97A; letter-spacing: 2px; }
     .header-logo-sub { font-size: 10px; color: #a89880; letter-spacing: 2px; text-transform: uppercase; margin-top: -2px; }
     .header-right { width: 38px; height: 38px; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; }
+
     nav { display: flex; background: #0d0a07; border-bottom: 1px solid rgba(201,168,76,0.1); padding: 0 4px; flex-shrink: 0; overflow-x: auto; }
     nav button { flex: 1; min-width: 60px; padding: 10px 4px 8px; background: none; border: none; border-bottom: 2px solid transparent; color: #a89880; font-family: 'Nunito', sans-serif; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px; transition: all 0.2s; }
     nav button .tab-icon { font-size: 18px; line-height: 1; }
     nav button.active { color: #C9A84C; border-bottom: 2px solid #C9A84C; }
+
     section { display: none; padding: 20px 16px; height: calc(100dvh - 120px); overflow-y: auto; }
     section.active { display: block; }
-    #chat { padding: 0; display: none; flex-direction: column; height: calc(100dvh - 120px); }
+
+    #chat { padding: 0; display: none; flex-direction: column; }
     #chat.active { display: flex; }
-    #chat-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; padding-bottom: 20px; }
-    #chat-input-area { display: flex; gap: 10px; padding: 12px 16px; border-top: 1px solid rgba(201,168,76,0.1); background-color: #0d0a07; position: sticky; bottom: 0; width: 100%; }
+    #chat-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; padding-bottom: 80px; }
+    #chat-input-area { display: flex; gap: 10px; padding: 12px 16px; border-top: 1px solid rgba(201,168,76,0.1); background-color: #0d0a07; position: fixed; bottom: 0; left: 0; right: 0; max-width: 480px; margin: 0 auto; }
     #chat-input { flex: 1; background: #1a1510; border: 1px solid rgba(201,168,76,0.2); border-radius: 20px; padding: 10px 16px; color: #f0e8d8; font-family: 'Nunito', sans-serif; font-size: 14px; outline: none; resize: none; max-height: 100px; line-height: 1.4; }
     #chat-input:focus { border-color: rgba(201,168,76,0.5); }
     #chat-input::placeholder { color: #a89880; }
@@ -82,6 +98,7 @@
     .msg-bubble { max-width: 75%; padding: 10px 14px; border-radius: 16px; font-size: 14px; line-height: 1.55; }
     .msg.ai .msg-bubble { background: #1a1510; border: 1px solid rgba(201,168,76,0.12); border-bottom-left-radius: 4px; }
     .msg.user .msg-bubble { background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.2); border-bottom-right-radius: 4px; }
+
     .section-inner { display: flex; flex-direction: column; gap: 16px; padding-bottom: 80px; }
     .section-header { text-align: center; padding: 10px 0; }
     .section-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; color: #E8C97A; }
@@ -103,6 +120,7 @@
     .scripture-search-btn { background: linear-gradient(135deg, #C9A84C, #8a6d2e); border: none; border-radius: 12px; padding: 11px 16px; color: #0d0a07; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 13px; cursor: pointer; white-space: nowrap; }
     .scripture-result { background: #1a1510; border: 1px solid rgba(201,168,76,0.15); border-radius: 16px; padding: 20px; display: none; }
     .scripture-result.visible { display: block; }
+
     .settings-card { display: flex; align-items: center; gap: 16px; background: #1a1510; border: 1px solid rgba(201,168,76,0.15); border-radius: 16px; padding: 16px; }
     .settings-avatar { width: 60px; height: 60px; background: linear-gradient(135deg, #C9A84C, #8a6d2e); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0; }
     .settings-name { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: #E8C97A; }
@@ -132,14 +150,14 @@
     .toggle-slider:before { content: ''; position: absolute; width: 20px; height: 20px; left: 3px; top: 3px; background: #a89880; border-radius: 50%; transition: 0.3s; }
     .toggle input:checked + .toggle-slider { background: rgba(201,168,76,0.3); }
     .toggle input:checked + .toggle-slider:before { transform: translateX(20px); background: #C9A84C; }
+
     .profile-top { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 20px 0; }
     .profile-avatar-big { width: 90px; height: 90px; background: linear-gradient(135deg, #C9A84C, #8a6d2e); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 44px; box-shadow: 0 4px 20px rgba(201,168,76,0.3); }
     .profile-name-display { font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #E8C97A; }
     .profile-joined { font-size: 12px; color: #a89880; }
     .btn-danger { width: 100%; padding: 14px; background: rgba(192,86,74,0.1); border: 1px solid rgba(192,86,74,0.3); border-radius: 12px; color: #c0564a; font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; }
-    .otp-inputs { display: flex; gap: 10px; justify-content: center; }
-    .otp-input { width: 50px; height: 56px; background: #1a1510; border: 1px solid rgba(201,168,76,0.2); border-radius: 12px; color: #f0e8d8; font-family: 'Nunito', sans-serif; font-size: 22px; font-weight: 700; text-align: center; outline: none; }
-    .otp-input:focus { border-color: #C9A84C; }
+
+    /* LIGHT THEME */
     body[data-theme="light"] { background-color: #f5f0e8; color: #1a1510; }
     body[data-theme="light"] header, body[data-theme="light"] nav, body[data-theme="light"] #chat-input-area, body[data-theme="light"] .screen { background-color: #ffffff; }
     body[data-theme="light"] .settings-card, body[data-theme="light"] .streak-card, body[data-theme="light"] .notif-card, body[data-theme="light"] .devo-card, body[data-theme="light"] .prayer-input-card, body[data-theme="light"] .devo-placeholder { background: #ffffff; }
@@ -155,16 +173,19 @@
     body[data-theme="ocean"] { background-color: #0a0f1f; color: #e0e8f5; }
     body[data-theme="ocean"] header, body[data-theme="ocean"] nav { background-color: #0f1a2a; }
   </style>
+  
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#C9A84C">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Grace">
-  <link rel="apple-touch-icon" href="icon-192.png">
+<meta name="theme-color" content="#C9A84C">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Grace">
+<link rel="apple-touch-icon" href="icon-192.png">
+
 </head>
 <body>
 <div id="app">
 
+  <!-- SCREEN 1: Splash -->
   <div class="screen active" id="screen-splash">
     <div class="splash-glow"></div>
     <div class="splash-icon">✝</div>
@@ -175,6 +196,7 @@
     <button class="btn-primary" onclick="goToScreen('screen-login')">Get Started</button>
   </div>
 
+  <!-- SCREEN 2: Login -->
   <div class="screen" id="screen-login">
     <div class="screen-inner">
       <div class="login-top">
@@ -183,7 +205,9 @@
         <p class="login-sub">Sign in to continue your faith journey</p>
       </div>
       <div class="social-buttons">
-        <button class="social-btn" onclick="goToScreen('screen-register')"><img src="https://www.google.com/favicon.ico" width="20" height="20" /> Continue with Google</button>
+        <button class="social-btn" onclick="goToScreen('screen-register')">
+          <img src="https://www.google.com/favicon.ico" width="20" height="20" /> Continue with Google
+        </button>
         <button class="social-btn" onclick="goToScreen('screen-register')">🍎 Continue with Apple</button>
         <button class="social-btn" onclick="goToScreen('screen-register')">📱 Continue with Phone</button>
       </div>
@@ -194,13 +218,14 @@
       </div>
       <div class="remember-row">
         <label class="remember-label"><input type="checkbox" /> Remember me</label>
-        <span class="forgot-link" onclick="goToScreen('screen-forgot')">Forgot Password?</span>
+        <span class="forgot-link">Forgot Password?</span>
       </div>
       <button class="btn-primary" onclick="loginUser()">Sign In</button>
       <p class="switch-link">Don't have an account? <span onclick="goToScreen('screen-register')">Create Account</span></p>
     </div>
   </div>
 
+  <!-- SCREEN 3: Register -->
   <div class="screen" id="screen-register">
     <div class="screen-inner">
       <button class="back-btn" onclick="goToScreen('screen-login')">← Back</button>
@@ -222,6 +247,7 @@
     </div>
   </div>
 
+  <!-- SCREEN 4: Profile Setup -->
   <div class="screen" id="screen-profile-setup">
     <div class="screen-inner">
       <button class="back-btn" onclick="goToScreen('screen-register')">← Back</button>
@@ -247,6 +273,7 @@
     </div>
   </div>
 
+  <!-- SCREEN 5: PIN -->
   <div class="screen" id="screen-pin">
     <div class="screen-inner">
       <button class="back-btn" onclick="goToScreen('screen-profile-setup')">← Back</button>
@@ -278,56 +305,7 @@
     </div>
   </div>
 
-  <div class="screen" id="screen-forgot">
-    <div class="screen-inner">
-      <button class="back-btn" onclick="goToScreen('screen-login')">← Back</button>
-      <div class="login-top">
-        <div class="login-icon">🔑</div>
-        <h2 class="login-title">Forgot Password</h2>
-        <p class="login-sub">Enter your email to receive a reset code</p>
-      </div>
-      <div class="input-group">
-        <input class="input-field" id="forgot-email" type="email" placeholder="Your email address" />
-      </div>
-      <button class="btn-primary" onclick="sendResetCode()">Send Reset Code</button>
-    </div>
-  </div>
-
-  <div class="screen" id="screen-reset-code">
-    <div class="screen-inner">
-      <button class="back-btn" onclick="goToScreen('screen-forgot')">← Back</button>
-      <div class="login-top">
-        <div class="login-icon">📧</div>
-        <h2 class="login-title">Enter Code</h2>
-        <p class="login-sub" id="reset-code-sub">Enter the 6-digit code sent to your email</p>
-      </div>
-      <div class="otp-inputs">
-        <input class="otp-input" id="otp-1" type="number" maxlength="1" oninput="otpNext(this, 'otp-2')" />
-        <input class="otp-input" id="otp-2" type="number" maxlength="1" oninput="otpNext(this, 'otp-3')" />
-        <input class="otp-input" id="otp-3" type="number" maxlength="1" oninput="otpNext(this, 'otp-4')" />
-        <input class="otp-input" id="otp-4" type="number" maxlength="1" oninput="otpNext(this, 'otp-5')" />
-        <input class="otp-input" id="otp-5" type="number" maxlength="1" oninput="otpNext(this, 'otp-6')" />
-        <input class="otp-input" id="otp-6" type="number" maxlength="1" oninput="otpNext(this, null)" />
-      </div>
-      <button class="btn-primary" onclick="verifyResetCode()">Verify Code</button>
-    </div>
-  </div>
-
-  <div class="screen" id="screen-new-password">
-    <div class="screen-inner">
-      <div class="login-top">
-        <div class="login-icon">🔒</div>
-        <h2 class="login-title">New Password</h2>
-        <p class="login-sub">Create a strong new password</p>
-      </div>
-      <div class="input-group">
-        <input class="input-field" id="new-pass-1" type="password" placeholder="New password" />
-        <input class="input-field" id="new-pass-2" type="password" placeholder="Confirm new password" />
-      </div>
-      <button class="btn-primary" onclick="resetPassword()">Reset Password</button>
-    </div>
-  </div>
-
+  <!-- SCREEN 6: Main App -->
   <div class="screen" id="screen-main">
     <header>
       <div class="header-left">
@@ -337,13 +315,13 @@
           <div class="header-logo-sub">Faith Companion</div>
         </div>
       </div>
-      <div style="display:flex;gap:8px;align-items:center;">
-        <div class="header-right" onclick="toggleNotifications()" id="notif-bell" style="position:relative;">
-          🔔
-          <div id="notif-badge" style="position:absolute;top:-4px;right:-4px;width:16px;height:16px;background:#C9A84C;border-radius:50%;font-size:10px;color:#0d0a07;display:flex;align-items:center;justify-content:center;font-weight:800;">3</div>
-        </div>
-        <div class="header-right" onclick="switchTab('profile')">👤</div>
-      </div>
+<div style="display:flex;gap:8px;align-items:center;">
+  <div class="header-right" onclick="toggleNotifications()" id="notif-bell" style="position:relative;">
+    🔔
+    <div id="notif-badge" style="position:absolute;top:-4px;right:-4px;width:16px;height:16px;background:#C9A84C;border-radius:50%;font-size:10px;color:#0d0a07;display:flex;align-items:center;justify-content:center;font-weight:800;">3</div>
+  </div>
+  <div class="header-right" onclick="switchTab('profile')">👤</div>
+</div>
     </header>
     <nav>
       <button class="active" onclick="switchTab('chat', event)"><span class="tab-icon">💬</span>Chat</button>
@@ -353,6 +331,7 @@
       <button onclick="switchTab('settings', event)"><span class="tab-icon">⚙️</span>Settings</button>
       <button onclick="switchTab('profile', event)"><span class="tab-icon">👤</span>Profile</button>
     </nav>
+
     <section id="chat" class="active">
       <div id="chat-messages"></div>
       <div id="chat-input-area">
@@ -360,16 +339,24 @@
         <button id="send-btn">➤</button>
       </div>
     </section>
+
     <section id="devotional">
       <div class="section-inner">
-        <div class="section-header"><div class="section-title">📖 Daily Devotional</div><div class="section-sub">Feed your spirit every day</div></div>
+        <div class="section-header">
+          <div class="section-title">📖 Daily Devotional</div>
+          <div class="section-sub">Feed your spirit every day</div>
+        </div>
         <div id="devo-content" class="devo-placeholder">Tap below to receive today's devotional ✝</div>
         <button class="btn-section" onclick="generateDevotional()">✦ Generate Today's Devotional</button>
       </div>
     </section>
+
     <section id="prayer">
       <div class="section-inner">
-        <div class="section-header"><div class="section-title">🙏 Prayer Guide</div><div class="section-sub">Let us craft a prayer for you</div></div>
+        <div class="section-header">
+          <div class="section-title">🙏 Prayer Guide</div>
+          <div class="section-sub">Let us craft a prayer for you</div>
+        </div>
         <div class="prayer-input-card">
           <label class="input-label">What would you like to pray about?</label>
           <textarea class="input-field" id="prayer-intention" placeholder="e.g. healing for my mother…" rows="3"></textarea>
@@ -386,9 +373,13 @@
         <div class="prayer-result" id="prayer-result"></div>
       </div>
     </section>
+
     <section id="scripture">
       <div class="section-inner">
-        <div class="section-header"><div class="section-title">✨ Scripture Study</div><div class="section-sub">Search and understand God's word</div></div>
+        <div class="section-header">
+          <div class="section-title">✨ Scripture Study</div>
+          <div class="section-sub">Search and understand God's word</div>
+        </div>
         <div class="scripture-search-row">
           <input class="input-field" id="scripture-input" placeholder="Topic, question or verse…" />
           <button class="scripture-search-btn" onclick="searchScripture()">Search</button>
@@ -410,12 +401,19 @@
         </div>
       </div>
     </section>
+
     <section id="settings">
       <div class="section-inner">
-        <div class="section-header"><div class="section-title">⚙️ Settings</div><div class="section-sub">Customize your Grace experience</div></div>
+        <div class="section-header">
+          <div class="section-title">⚙️ Settings</div>
+          <div class="section-sub">Customize your Grace experience</div>
+        </div>
         <div class="settings-card">
           <div class="settings-avatar">🙏</div>
-          <div><div class="settings-name" id="settings-name">Friend</div><div class="settings-email">Tap to edit profile</div></div>
+          <div>
+            <div class="settings-name" id="settings-name">Friend</div>
+            <div class="settings-email">Tap to edit profile</div>
+          </div>
         </div>
         <div class="settings-section-title">🎨 App Theme</div>
         <div class="theme-grid">
@@ -433,15 +431,28 @@
         </div>
         <div class="settings-section-title">🔔 Notifications</div>
         <div class="notif-card">
-          <div class="notif-row"><div><div class="notif-title">Daily Devotional</div><div class="notif-sub">Remind me every morning</div></div><label class="toggle"><input type="checkbox" id="notif-devotional" onchange="saveNotifSettings()" /><span class="toggle-slider"></span></label></div>
-          <div class="notif-row"><div><div class="notif-title">Prayer Reminder</div><div class="notif-sub">Remind me to pray daily</div></div><label class="toggle"><input type="checkbox" id="notif-prayer" onchange="saveNotifSettings()" /><span class="toggle-slider"></span></label></div>
-          <div class="notif-row"><div><div class="notif-title">Streak Alert</div><div class="notif-sub">Don't break your streak!</div></div><label class="toggle"><input type="checkbox" id="notif-streak" onchange="saveNotifSettings()" /><span class="toggle-slider"></span></label></div>
+          <div class="notif-row">
+            <div><div class="notif-title">Daily Devotional</div><div class="notif-sub">Remind me every morning</div></div>
+            <label class="toggle"><input type="checkbox" id="notif-devotional" onchange="saveNotifSettings()" /><span class="toggle-slider"></span></label>
+          </div>
+          <div class="notif-row">
+            <div><div class="notif-title">Prayer Reminder</div><div class="notif-sub">Remind me to pray daily</div></div>
+            <label class="toggle"><input type="checkbox" id="notif-prayer" onchange="saveNotifSettings()" /><span class="toggle-slider"></span></label>
+          </div>
+          <div class="notif-row">
+            <div><div class="notif-title">Streak Alert</div><div class="notif-sub">Don't break your streak!</div></div>
+            <label class="toggle"><input type="checkbox" id="notif-streak" onchange="saveNotifSettings()" /><span class="toggle-slider"></span></label>
+          </div>
         </div>
       </div>
     </section>
+
     <section id="profile">
       <div class="section-inner">
-        <div class="section-header"><div class="section-title">👤 My Profile</div><div class="section-sub">Manage your account</div></div>
+        <div class="section-header">
+          <div class="section-title">👤 My Profile</div>
+          <div class="section-sub">Manage your account</div>
+        </div>
         <div class="profile-top">
           <div class="profile-avatar-big">🙏</div>
           <div class="profile-name-display" id="profile-name-display">Friend</div>
@@ -472,20 +483,23 @@
           <button class="btn-danger" onclick="logOut()">Sign Out</button>
         </div>
       </div>
-      <div id="notif-panel" style="display:none;position:fixed;top:70px;right:10px;width:300px;background:#1a1510;border:1px solid rgba(201,168,76,0.3);border-radius:16px;z-index:1000;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.5);">
-        <div style="padding:14px 16px;border-bottom:1px solid rgba(201,168,76,0.1);display:flex;justify-content:space-between;align-items:center;">
-          <span style="font-family:'Cormorant Garamond',serif;font-size:18px;color:#E8C97A;">Notifications</span>
-          <span onclick="clearNotifications()" style="font-size:11px;color:#C9A84C;cursor:pointer;letter-spacing:1px;">CLEAR ALL</span>
-        </div>
-        <div id="notif-list"></div>
-      </div>
+      <!-- Notifications Panel -->
+<div id="notif-panel" style="display:none;position:fixed;top:70px;right:10px;width:300px;background:#1a1510;border:1px solid rgba(201,168,76,0.3);border-radius:16px;z-index:1000;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.5);">
+  <div style="padding:14px 16px;border-bottom:1px solid rgba(201,168,76,0.1);display:flex;justify-content:space-between;align-items:center;">
+    <span style="font-family:'Cormorant Garamond',serif;font-size:18px;color:#E8C97A;">Notifications</span>
+    <span onclick="clearNotifications()" style="font-size:11px;color:#C9A84C;cursor:pointer;letter-spacing:1px;">CLEAR ALL</span>
+  </div>
+  <div id="notif-list"></div>
+</div>
     </section>
+
   </div>
 </div>
 
 <script>
   const BACKEND = 'https://grace-app.onrender.com';
 
+  // ===== SCREEN NAVIGATION =====
   function goToScreen(screenId) {
     const currentScreen = document.querySelector('.screen.active');
     const nextScreen = document.getElementById(screenId);
@@ -494,8 +508,9 @@
     currentScreen.classList.add('exit');
     nextScreen.classList.add('active');
     setTimeout(function() { currentScreen.classList.remove('exit'); }, 400);
-  }
+  }''
 
+  // ===== TAB SWITCHING =====
   function switchTab(name, e) {
     document.querySelectorAll('nav button').forEach(function(t) { t.classList.remove('active'); });
     document.querySelectorAll('section').forEach(function(s) { s.classList.remove('active'); });
@@ -503,12 +518,15 @@
     if (e && e.currentTarget) e.currentTarget.classList.add('active');
   }
 
+  // ===== PIN =====
   let pinValue = '';
   function enterPin(number) {
     if (pinValue.length >= 4) return;
     pinValue += number;
     updatePinDots();
-    if (pinValue.length === 4) { setTimeout(function() { goToScreen('screen-main'); }, 400); }
+    if (pinValue.length === 4) {
+      setTimeout(function() { goToScreen('screen-main'); }, 400);
+    }
   }
   function deletePin() { pinValue = pinValue.slice(0, -1); updatePinDots(); }
   function updatePinDots() {
@@ -518,6 +536,7 @@
     }
   }
 
+  // ===== REGISTER =====
   async function registerUser() {
     const name = document.getElementById('reg-name').value.trim();
     const email = document.getElementById('reg-email').value.trim();
@@ -525,12 +544,18 @@
     const password = document.getElementById('reg-password').value;
     const confirm = document.getElementById('reg-confirm').value;
     const terms = document.getElementById('reg-terms').checked;
+
     if (!name || !email || !password) { alert('Please fill in all required fields!'); return; }
     if (!terms) { alert('Please agree to the Terms & Privacy Policy!'); return; }
     if (password !== confirm) { alert('Passwords do not match!'); return; }
     if (password.length < 6) { alert('Password must be at least 6 characters!'); return; }
+
     try {
-      const response = await fetch(BACKEND + '/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, email, password, phone }) });
+      const response = await fetch(BACKEND + '/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password, phone })
+      });
       const data = await response.json();
       if (!response.ok) { alert(data.error); return; }
       localStorage.setItem('grace_token', data.token);
@@ -539,15 +564,24 @@
       loadProfile();
       alert('Account created! Welcome to Grace ✅');
       goToScreen('screen-profile-setup');
-    } catch(error) { alert('Could not connect to server!'); }
+    } catch(error) {
+      alert('Could not connect to server. Make sure it is running!');
+    }
   }
 
+  // ===== LOGIN =====
   async function loginUser() {
     const email = document.getElementById('login-email').value.trim();
     const password = document.getElementById('login-password').value;
+
     if (!email || !password) { alert('Please enter your email and password!'); return; }
+
     try {
-      const response = await fetch(BACKEND + '/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) });
+      const response = await fetch(BACKEND + '/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
       const data = await response.json();
       if (!response.ok) { alert(data.error); return; }
       localStorage.setItem('grace_token', data.token);
@@ -555,76 +589,9 @@
       localStorage.setItem('grace_email', data.user.email);
       loadProfile();
       goToScreen('screen-main');
-    } catch(error) { alert('Could not connect to server!'); }
-  }
-
-  // ===== FORGOT PASSWORD =====
-  let resetEmail = '';
-  async function sendResetCode() {
-    const email = document.getElementById('forgot-email').value.trim();
-    if (!email) { alert('Please enter your email!'); return; }
-    try {
-      const response = await fetch(BACKEND + '/forgot-password', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
-      });
-      const data = await response.json();
-      if (!response.ok) { alert(data.error); return; }
-      await emailjs.send('service_2oq09v8', 'template_hozo3sm', {
-        email: email,
-        reset_code: data.code
-      });
-      resetEmail = email;
-      localStorage.setItem('grace_reset_email', email);
-      document.getElementById('reset-code-sub').textContent = 'Code sent to ' + email;
-      alert('Reset code sent! Check your email ✅');
-      goToScreen('screen-reset-code');
-    } catch(e) {
-      console.log(e);
-      alert('Could not send email. Try again!');
+    } catch(error) {
+      alert('Could not connect to server. Make sure it is running!');
     }
-  }
-
-  function otpNext(current, nextId) {
-    if (current.value.length >= 1 && nextId) { document.getElementById(nextId).focus(); }
-  }
-  
-  async function verifyResetCode() {
-    const code = ['otp-1','otp-2','otp-3','otp-4','otp-5','otp-6'].map(function(id) { return document.getElementById(id).value; }).join('');
-    if (code.length < 6) { alert('Please enter the full 6-digit code!'); return; }
-    try {
-      const response = await fetch(BACKEND + '/verify-code', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: resetEmail || localStorage.getItem('grace_reset_email'), code })
-      });
-      const data = await response.json();
-      if (!response.ok) { alert(data.error); return; }
-      localStorage.setItem('grace_reset_code', code);
-      goToScreen('screen-new-password');
-    } catch(e) { alert('Could not verify code. Try again!'); }
-  }
-
-  async function resetPassword() {
-    const newPass = document.getElementById('new-pass-1').value;
-    const confirm = document.getElementById('new-pass-2').value;
-    if (!newPass || !confirm) { alert('Please fill in both fields!'); return; }
-    if (newPass !== confirm) { alert('Passwords do not match!'); return; }
-    if (newPass.length < 6) { alert('Password must be at least 6 characters!'); return; }
-    const code = localStorage.getItem('grace_reset_code');
-    try {
-      const response = await fetch(BACKEND + '/reset-password', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: resetEmail || localStorage.getItem('grace_reset_email'), code, newPassword: newPass })
-      });
-      const data = await response.json();
-      if (!response.ok) { alert(data.error); return; }
-      alert('Password reset successfully! Please sign in ✅');
-      localStorage.removeItem('grace_reset_code');
-      goToScreen('screen-login');
-    } catch(e) { alert('Something went wrong. Try again!'); }
   }
 
   // ===== CHAT =====
@@ -632,7 +599,9 @@
   const chatInput = document.getElementById('chat-input');
   const sendBtn = document.getElementById('send-btn');
   sendBtn.addEventListener('click', function() { sendMessage(); });
-  chatInput.addEventListener('keydown', function(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } });
+  chatInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  });
   function sendMessage() {
     const text = chatInput.value.trim();
     if (!text) return;
@@ -653,7 +622,11 @@
   async function getAIResponse(userMessage) {
     addMessage('ai', 'Grace is typing...');
     try {
-      const response = await fetch(BACKEND + '/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: userMessage }) });
+      const response = await fetch(BACKEND + '/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userMessage })
+      });
       const data = await response.json();
       chatMessages.removeChild(chatMessages.lastElementChild);
       addMessage('ai', data.reply);
@@ -667,11 +640,16 @@
     addMessage('ai', 'Welcome, ' + name + '! 🙏 I\'m Grace, your faith companion. How can I help you draw closer to God today?');
   }
 
+  // ===== DEVOTIONAL =====
   async function generateDevotional() {
     const content = document.getElementById('devo-content');
     content.innerHTML = '<div class="devo-placeholder">✝ Preparing your devotional...</div>';
     try {
-      const response = await fetch(BACKEND + '/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: 'Generate a short daily Christian devotional. Reply in this exact format - VERSE_REF: [reference] | VERSE: [verse text] | TITLE: [title] | REFLECTION: [2-3 sentences]' }) });
+      const response = await fetch(BACKEND + '/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: 'Generate a short daily Christian devotional. Reply in this exact format - VERSE_REF: [reference] | VERSE: [verse text] | TITLE: [title] | REFLECTION: [2-3 sentences]' })
+      });
       const data = await response.json();
       const text = data.reply;
       const ref = text.match(/VERSE_REF:\s*([^|]+)/)?.[1]?.trim();
@@ -679,9 +657,12 @@
       const title = text.match(/TITLE:\s*([^|]+)/)?.[1]?.trim();
       const reflection = text.match(/REFLECTION:\s*(.+)/s)?.[1]?.trim();
       content.innerHTML = '<div class="devo-card"><div class="devo-verse-ref">' + ref + '</div><div class="devo-verse-text">"' + verse + '"</div><div class="section-title" style="font-size:18px;margin-bottom:8px">' + title + '</div><div class="devo-reflection">' + reflection + '</div></div>';
-    } catch(e) { content.innerHTML = '<div class="devo-placeholder">Could not load. Make sure your server is running!</div>'; }
+    } catch(e) {
+      content.innerHTML = '<div class="devo-placeholder">Could not load. Make sure your server is running!</div>';
+    }
   }
 
+  // ===== PRAYER =====
   function selectChip(el) {
     document.querySelectorAll('.chip').forEach(function(c) { c.classList.remove('active'); });
     el.classList.add('active');
@@ -694,12 +675,19 @@
     result.textContent = 'Writing your prayer...';
     result.classList.add('visible');
     try {
-      const response = await fetch(BACKEND + '/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: 'Write a heartfelt Christian ' + prayerType + ' prayer for: ' + intention + '. End with Amen.' }) });
+      const response = await fetch(BACKEND + '/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: 'Write a heartfelt Christian ' + prayerType + ' prayer for: ' + intention + '. End with Amen.' })
+      });
       const data = await response.json();
       result.textContent = data.reply;
-    } catch(e) { result.textContent = 'Could not generate prayer. Make sure your server is running!'; }
+    } catch(e) {
+      result.textContent = 'Could not generate prayer. Make sure your server is running!';
+    }
   }
 
+  // ===== SCRIPTURE =====
   function quickSearch(topic) { document.getElementById('scripture-input').value = topic; searchScripture(); }
   async function searchScripture() {
     const query = document.getElementById('scripture-input').value.trim();
@@ -710,15 +698,22 @@
     document.getElementById('scripture-explanation').textContent = '';
     result.classList.add('visible');
     try {
-      const response = await fetch(BACKEND + '/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: 'Find the best Bible verse for: "' + query + '". Reply in this format - REF: [reference] | VERSE: [verse text] | EXPLANATION: [2-3 sentences]' }) });
+      const response = await fetch(BACKEND + '/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: 'Find the best Bible verse for: "' + query + '". Reply in this format - REF: [reference] | VERSE: [verse text] | EXPLANATION: [2-3 sentences]' })
+      });
       const data = await response.json();
       const reply = data.reply;
       document.getElementById('scripture-ref').textContent = reply.match(/REF:\s*([^|]+)/)?.[1]?.trim();
       document.getElementById('scripture-text').textContent = '"' + reply.match(/VERSE:\s*([^|]+)/)?.[1]?.trim() + '"';
       document.getElementById('scripture-explanation').textContent = reply.match(/EXPLANATION:\s*(.+)/s)?.[1]?.trim();
-    } catch(e) { document.getElementById('scripture-ref').textContent = 'Error — make sure your server is running!'; }
+    } catch(e) {
+      document.getElementById('scripture-ref').textContent = 'Error — make sure your server is running!';
+    }
   }
 
+  // ===== THEME =====
   function setTheme(theme) {
     document.querySelectorAll('.theme-btn').forEach(function(btn) { btn.classList.remove('active'); });
     document.querySelector('[data-theme="' + theme + '"]').classList.add('active');
@@ -727,23 +722,31 @@
   }
   function loadTheme() { setTheme(localStorage.getItem('grace_theme') || 'dark'); }
 
+  // ===== STREAK =====
   function updateStreak() {
     const today = new Date().toDateString();
     const lastLogin = localStorage.getItem('grace_last_login');
     let streak = parseInt(localStorage.getItem('grace_streak')) || 0;
     if (lastLogin === today) {
     } else if (lastLogin === new Date(Date.now() - 86400000).toDateString()) {
-      streak += 1; localStorage.setItem('grace_streak', streak);
+      streak += 1;
+      localStorage.setItem('grace_streak', streak);
     } else {
-      streak = 1; localStorage.setItem('grace_streak', streak);
+      streak = 1;
+      localStorage.setItem('grace_streak', streak);
     }
     localStorage.setItem('grace_last_login', today);
     document.getElementById('streak-number').textContent = streak;
-    if (streak < 7) { document.getElementById('streak-message').textContent = 'Keep going! ' + streak + ' days strong! 🔥'; }
-    else if (streak < 30) { document.getElementById('streak-message').textContent = streak + ' days with God! You\'re on fire!! 🔥🔥'; }
-    else { document.getElementById('streak-message').textContent = streak + ' days! You\'re a true prayer warrior!! 👑'; }
+    if (streak < 7) {
+      document.getElementById('streak-message').textContent = 'Keep going! ' + streak + ' days strong! 🔥';
+    } else if (streak < 30) {
+      document.getElementById('streak-message').textContent = streak + ' days with God! You\'re on fire!! 🔥🔥';
+    } else {
+      document.getElementById('streak-message').textContent = streak + ' days! You\'re a true prayer warrior!! 👑';
+    }
   }
 
+  // ===== NOTIFICATIONS =====
   function saveNotifSettings() {
     localStorage.setItem('grace_notif_devotional', document.getElementById('notif-devotional').checked);
     localStorage.setItem('grace_notif_prayer', document.getElementById('notif-prayer').checked);
@@ -755,6 +758,7 @@
     document.getElementById('notif-streak').checked = localStorage.getItem('grace_notif_streak') === 'true';
   }
 
+  // ===== PROFILE =====
   function saveProfile() {
     const name = document.getElementById('profile-name-input').value.trim();
     if (!name) { alert('Please enter your name!'); return; }
@@ -788,46 +792,81 @@
     document.getElementById('profile-phone-input').value = localStorage.getItem('grace_phone') || '';
     document.getElementById('settings-name').textContent = name;
   }
-
   // ===== NOTIFICATIONS =====
-  let notifications = [
-    { id: 1, icon: '📖', title: 'Daily Devotional', message: 'Your morning devotional is ready!', time: 'Just now', read: false },
-    { id: 2, icon: '🔥', title: 'Streak Alert', message: 'Don\'t break your streak! Open Grace today!', time: '1h ago', read: false },
-    { id: 3, icon: '🙏', title: 'Prayer Time', message: 'Take a moment to pray today', time: '2h ago', read: false }
-  ];
-  function toggleNotifications() {
-    const panel = document.getElementById('notif-panel');
-    if (panel.style.display === 'none') { panel.style.display = 'block'; renderNotifications(); } else { panel.style.display = 'none'; }
-  }
-  function renderNotifications() {
-    const list = document.getElementById('notif-list');
-    if (notifications.length === 0) { list.innerHTML = '<div style="padding:20px;text-align:center;color:#a89880;font-size:13px;">No notifications 🙏</div>'; return; }
-    list.innerHTML = notifications.map(function(n) {
-      return '<div style="padding:14px 16px;border-bottom:1px solid rgba(201,168,76,0.08);display:flex;gap:12px;align-items:flex-start;background:' + (n.read ? 'transparent' : 'rgba(201,168,76,0.05)') + '"><div style="font-size:24px;">' + n.icon + '</div><div style="flex:1;"><div style="font-size:13px;font-weight:700;color:#f0e8d8;">' + n.title + '</div><div style="font-size:12px;color:#a89880;margin-top:2px;">' + n.message + '</div><div style="font-size:10px;color:#C9A84C;margin-top:4px;letter-spacing:1px;">' + n.time + '</div></div></div>';
-    }).join('');
-    updateBadge();
-  }
-  function updateBadge() {
-    const unread = notifications.filter(function(n) { return !n.read; }).length;
-    const badge = document.getElementById('notif-badge');
-    if (unread > 0) { badge.style.display = 'flex'; badge.textContent = unread; } else { badge.style.display = 'none'; }
-  }
-  function clearNotifications() {
-    notifications = [];
+let notifications = [
+  { id: 1, icon: '📖', title: 'Daily Devotional', message: 'Your morning devotional is ready!', time: 'Just now', read: false },
+  { id: 2, icon: '🔥', title: 'Streak Alert', message: 'Don\'t break your streak! Open Grace today!', time: '1h ago', read: false },
+  { id: 3, icon: '🙏', title: 'Prayer Time', message: 'Take a moment to pray today', time: '2h ago', read: false }
+];
+
+function toggleNotifications() {
+  const panel = document.getElementById('notif-panel');
+  if (panel.style.display === 'none') {
+    panel.style.display = 'block';
     renderNotifications();
-    document.getElementById('notif-panel').style.display = 'none';
+  } else {
+    panel.style.display = 'none';
   }
-  function addNotification(icon, title, message) {
-    notifications.unshift({ id: Date.now(), icon, title, message, time: 'Just now', read: false });
-    updateBadge();
+}
+
+function renderNotifications() {
+  const list = document.getElementById('notif-list');
+  if (notifications.length === 0) {
+    list.innerHTML = '<div style="padding:20px;text-align:center;color:#a89880;font-size:13px;">No notifications 🙏</div>';
+    return;
   }
-  document.addEventListener('click', function(e) {
-    const panel = document.getElementById('notif-panel');
-    const bell = document.getElementById('notif-bell');
-    if (panel && bell && !panel.contains(e.target) && !bell.contains(e.target)) { panel.style.display = 'none'; }
+  list.innerHTML = notifications.map(function(n) {
+    return '<div style="padding:14px 16px;border-bottom:1px solid rgba(201,168,76,0.08);display:flex;gap:12px;align-items:flex-start;background:' + (n.read ? 'transparent' : 'rgba(201,168,76,0.05)') + '">' +
+      '<div style="font-size:24px;">' + n.icon + '</div>' +
+      '<div style="flex:1;">' +
+        '<div style="font-size:13px;font-weight:700;color:#f0e8d8;">' + n.title + '</div>' +
+        '<div style="font-size:12px;color:#a89880;margin-top:2px;">' + n.message + '</div>' +
+        '<div style="font-size:10px;color:#C9A84C;margin-top:4px;letter-spacing:1px;">' + n.time + '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+  updateBadge();
+}
+
+function updateBadge() {
+  const unread = notifications.filter(function(n) { return !n.read; }).length;
+  const badge = document.getElementById('notif-badge');
+  if (unread > 0) {
+    badge.style.display = 'flex';
+    badge.textContent = unread;
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+function clearNotifications() {
+  notifications = [];
+  renderNotifications();
+  document.getElementById('notif-panel').style.display = 'none';
+}
+
+function addNotification(icon, title, message) {
+  notifications.unshift({
+    id: Date.now(),
+    icon: icon,
+    title: title,
+    message: message,
+    time: 'Just now',
+    read: false
   });
+  updateBadge();
+}
+
+document.addEventListener('click', function(e) {
+  const panel = document.getElementById('notif-panel');
+  const bell = document.getElementById('notif-bell');
+  if (panel && bell && !panel.contains(e.target) && !bell.contains(e.target)) {
+    panel.style.display = 'none';
+  }
+});
 
   // ===== INIT =====
+    // Register service worker
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/grace-app/service-worker.js')
       .then(function() { console.log('Service Worker registered!'); })
@@ -839,9 +878,6 @@
   loadProfile();
   showWelcomeMessage();
 </script>
-
-<!-- EmailJS loaded at bottom so it's ready before any function calls it -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>emailjs.init('9LNJwsRgZWTJ_Ment');</script>
 </body>
+
 </html>
